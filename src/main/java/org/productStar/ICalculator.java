@@ -1,6 +1,6 @@
 package org.productStar;                     // Пакет с интерфейсом ICalculator
 
-import java.util.List;                       // Импорт списка для графика платежей
+import java.util.List;
 
 public interface ICalculator {               // Интерфейс общего калькулятора графиков
 

@@ -1,7 +1,7 @@
 package org.productStar;                         // Пакет с аннуитетным калькулятором с первоначальным взносом
 
-import java.util.ArrayList;                      // Импорт ArrayList
-import java.util.List;                           // Импорт List
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnnuityCalculatorWithDiscount implements IDiscount { // Калькулятор с учётом первоначального взноса
     private double principal;                    // Сумма займа ПОСЛЕ вычета первоначального взноса

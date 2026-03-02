@@ -125,5 +125,5 @@
 1. Склонировать репозиторий:
 
    ```bash
-   git clone https://github.com/<your-account>/<your-repo>.git
+   git clone https://github.com/<your-account>/<https://github.com/degtuareva/creditCalculator.git>.git
    cd <your-repo>

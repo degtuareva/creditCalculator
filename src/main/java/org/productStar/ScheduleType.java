@@ -11,7 +11,7 @@ public enum ScheduleType {                  // Объявление перечи
         this.englishValue = english;        // Сохраняем английское значение
         this.russianValue = russian;        // Сохраняем русское значение
     }
-
+o
     public static ScheduleType parse(String input) { // Статический метод для разбора строки в ScheduleType
         String cleanInput = input.trim().toLowerCase(); // Очищаем пробелы по краям и приводим к нижнему регистру
 

@@ -1,6 +1,6 @@
 package org.productStar;                     // Пакет, в котором находится класс
 
-import java.util.Scanner;                    // Импорт класса Scanner для чтения с консоли
+import java.util.Scanner;
 
 public class InputReader {                   // Класс, отвечающий за ввод и валидацию данных
     private final Scanner scanner;           // Поле для объекта Scanner

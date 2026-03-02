@@ -1,7 +1,7 @@
 package org.productStar;                         // Пакет, содержащий аннуитетный калькулятор
 
-import java.util.ArrayList;                      // Импорт списка ArrayList
-import java.util.List;                           // Импорт интерфейса List
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnnuityCalculator implements ICalculator { // Класс аннуитетного калькулятора, реализующий ICalculator
     private double principal;                    // Сумма кредита (основной долг)

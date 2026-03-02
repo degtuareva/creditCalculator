@@ -1,7 +1,7 @@
 package org.productStar;                         // Пакет с дифференцированным калькулятором
 
-import java.util.ArrayList;                      // Импорт ArrayList
-import java.util.List;                           // Импорт List
+import java.util.ArrayList;
+import java.util.List;
 
 public class DifferentiatedCalculator implements ICalculator { // Калькулятор дифференцированного графика
     private double principal;                    // Сумма кредита
