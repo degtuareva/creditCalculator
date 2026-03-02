@@ -1,51 +1,66 @@
-package org.productStar;
+package org.productStar;                         // Пакет, содержащий аннуитетный калькулятор
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;                      // Импорт списка ArrayList
+import java.util.List;                           // Импорт интерфейса List
 
-public class AnnuityCalculator implements ICalculator {
-    private double principal;
-    private double annualInterestRate;
-    private int years;
-    private List<Payment> payments;
-
-
-    @Override
-    public void setPrincipal(double principal) { this.principal = principal; }
+public class AnnuityCalculator implements ICalculator { // Класс аннуитетного калькулятора, реализующий ICalculator
+    private double principal;                    // Сумма кредита (основной долг)
+    private double annualInterestRate;           // Годовая процентная ставка
+    private int years;                           // Срок кредита в годах
+    private List<Payment> payments;              // Список платежей (график)
 
     @Override
-    public void setAnnualInterestRate(double annualInterestRate) { this.annualInterestRate = annualInterestRate; }
+    public void setPrincipal(double principal) { // Установка суммы кредита
+        this.principal = principal;
+    }
 
     @Override
-    public void setYears(int years) { this.years = years; }
+    public void setAnnualInterestRate(double annualInterestRate) { // Установка годовой ставки
+        this.annualInterestRate = annualInterestRate;
+    }
 
     @Override
-    public void calculatePayments() {
-        double monthlyRate = annualInterestRate / 12 / 100;
-        double monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, years * 12)) / (Math.pow(1 + monthlyRate, years * 12) - 1);
-        payments = new ArrayList<>();
+    public void setYears(int years) {            // Установка срока в годах
+        this.years = years;
+    }
 
-        for (int month = 1; month <= years * 12; month++) {
-            double interestPayment = principal * monthlyRate;
-            double principalPayment = monthlyPayment - interestPayment;
-            principal -= principalPayment;
+    @Override
+    public void calculatePayments() {            // Расчёт графика аннуитетных платежей
+        double monthlyRate = annualInterestRate / 12 / 100; // Вычисляем месячную процентную ставку
+        int totalMonths = years * 12;            // Общее количество месяцев кредита
+        double monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, totalMonths))
+                / (Math.pow(1 + monthlyRate, totalMonths) - 1); // Формула аннуитетного платежа
+        payments = new ArrayList<>();            // Инициализируем список платежей
 
-            payments.add(new Payment(month, principalPayment, interestPayment));
+        double remainingDebt = principal;        // Текущий остаток долга
+
+        for (int month = 1; month <= totalMonths; month++) { // Цикл по всем месяцам
+            double interestPayment = remainingDebt * monthlyRate; // Считаем проценты от остатка долга
+            double principalPayment = monthlyPayment - interestPayment; // Основной долг = платёж - проценты
+            remainingDebt -= principalPayment;   // Обновляем остаток долга после погашения
+            if (remainingDebt < 0) {             // Если остаток стал отрицательным из-за округлений
+                remainingDebt = 0;               // Принудительно обнуляем остаток
+            }
+            payments.add(new Payment(month, principalPayment, interestPayment)); // Добавляем платёж в список
         }
     }
 
     @Override
-    public double getTotalPayment() {
-        return payments.stream().mapToDouble(Payment::getTotalPayment).sum();
+    public double getTotalPayment() {            // Получение общей суммы всех платежей
+        return payments.stream()                 // Берём поток платежей
+                .mapToDouble(Payment::getTotalPayment) // Преобразуем в поток double по сумме платежа
+                .sum();                          // Складываем все значения
     }
 
     @Override
-    public double getTotalInterest() {
-        return payments.stream().mapToDouble(Payment::getInterestPayment).sum();
+    public double getTotalInterest() {           // Получение общей суммы процентов
+        return payments.stream()                 // Поток платежей
+                .mapToDouble(Payment::getInterestPayment) // Берём только проценты
+                .sum();                          // Складываем проценты
     }
 
     @Override
-    public List<Payment> getPaymentsSchedule() {
-        return payments;
+    public List<Payment> getPaymentsSchedule() { // Получение графика платежей
+        return payments;                        // Возвращаем список платежей
     }
 }
