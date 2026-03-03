@@ -1,40 +1,45 @@
-# Credit Calculator (Консольный кредитный калькулятор)
+# Credit Calculator (Консольный и веб‑калькулятор кредита)
 
-Консольное Java‑приложение для расчёта кредитного графика.  
-Поддерживает аннуитетный и дифференцированный графики, первоначальный взнос, расчёт переплаты и удобную валидацию ввода.
+Учебный проект на Java: изначально консольное приложение для расчёта кредитного графика, затем доработанное до full‑stack‑приложения с backend на Spring Boot и frontend на React.
 
-## Возможности
+Поддерживаются аннуитетный и дифференцированный графики, первоначальный взнос, расчёт переплаты и удобная валидация ввода.
 
-- Расчёт **аннуитетного графика** платежей
-- Расчёт **аннуитетного графика с первоначальным взносом**
-- Расчёт **дифференцированного графика** (подготовлено архитектурно, реализовано через отдельный калькулятор)
+---
+
+## Вариант 1. Консольный кредитный калькулятор
+
+### Возможности
+
+- Расчёт **аннуитетного графика** платежей.
+- Расчёт **аннуитетного графика с первоначальным взносом**.
+- Расчёт **дифференцированного графика** (реализовано отдельным калькулятором).
 - Поддержка двух типов ввода типа графика:
-    - по номеру: `1` — аннуитет, `2` — дифференцированный
-    - по тексту: `annuity` / `аннуитет`, `differentiated` / `дифференцированный`
+  - по номеру: `1` — аннуитет, `2` — дифференцированный;
+  - по тексту: `annuity` / `аннуитет`, `differentiated` / `дифференцированный`.
 - Валидация пользовательского ввода:
-    - сумма кредита, первоначальный взнос, срок, процентная ставка
-    - защита от отрицательных значений и некорректного формата
+  - сумма кредита, первоначальный взнос, срок, процентная ставка;
+  - защита от отрицательных значений и некорректного формата.
 - Расчёт и вывод:
-    - общей суммы выплат
-    - общей суммы процентов
-    - **суммы переплаты** и её процента
+  - общей суммы выплат;
+  - общей суммы процентов;
+  - **суммы переплаты** и её процента.
 - Печать помесячного графика:
-    - месяц
-    - платёж по основному долгу
-    - платёж по процентам
-    - общий платеж
+  - месяц;
+  - платёж по основному долгу;
+  - платёж по процентам;
+  - общий платеж.
 
-## Технологии
+### Технологии
 
-- Java 17+ (можно и ниже, если скорректировать синтаксис `switch`)
-- Консольный ввод/вывод (`Scanner`, `System.out`)
-- Архитектура по принципам **SOLID**
+- Java 17+ (можно и ниже, если скорректировать синтаксис `switch`).
+- Консольный ввод/вывод (`Scanner`, `System.out`).
+- Архитектура по принципам **SOLID**.
 
-## Архитектура проекта
+### Архитектура консольного проекта
 
 Проект разделён на логические слои, каждый класс отвечает за одну зону ответственности.
 
-### Основные классы
+#### Основные классы
 
 - `Application`  
   Точка входа в приложение. Настраивает зависимости и запускает контроллер.
@@ -47,36 +52,36 @@
 
 - `ResultPrinter`  
   Отвечает за форматированный вывод:
-    - сводных результатов (переплата, проценты, суммы)
-    - помесячного графика платежей.
+  - сводных результатов (переплата, проценты, суммы);
+  - помесячного графика платежей.
 
 - `CalculatorFactory`  
   Создаёт нужную реализацию `ICalculator` на основе `ScheduleType` и наличия первоначального взноса.
 
-### Модель и интерфейсы
+#### Модель и интерфейсы
 
 - `Payment`  
   DTO одного платежа: месяц, погашение основного долга, проценты, общий платеж.
 
 - `ICalculator`  
   Общий контракт для всех калькуляторов:
-    - `setPrincipal(double)`
-    - `setAnnualInterestRate(double)`
-    - `setYears(int)`
-    - `calculatePayments()`
-    - `getTotalPayment()`
-    - `getTotalInterest()`
-    - `getPaymentsSchedule()`
+  - `setPrincipal(double)`;
+  - `setAnnualInterestRate(double)`;
+  - `setYears(int)`;
+  - `calculatePayments()`;
+  - `getTotalPayment()`;
+  - `getTotalInterest()`;
+  - `getPaymentsSchedule()`.
 
 - `IDiscount`  
   Расширяет `ICalculator` для калькуляторов с первоначальным взносом:
-    - добавляет `setDiscount(double)`.
+  - добавляет `setDiscount(double)`.
 
 - `ScheduleType` (enum)  
   Тип графика: `ANNUITY`, `DIFFERENTIATED`.  
   Умеет парсить строку пользователя (`parse(String)`), поддерживает русские и английские названия.
 
-### Реализации калькуляторов
+#### Реализации калькуляторов
 
 - `AnnuityCalculator`  
   Классический аннуитетный график без первоначального взноса.  
@@ -88,26 +93,24 @@
 
 - `DifferentiatedCalculator`  
   Дифференцированный график:
-    - ежемесячный платёж по основному долгу — постоянный
-    - проценты начисляются на остаток долга
-    - ежемесячный платёж по итогу уменьшается со временем.
+  - ежемесячный платёж по основному долгу — постоянный;
+  - проценты начисляются на остаток долга;
+  - ежемесячный платёж по итогу уменьшается со временем.
 
-## Принципы SOLID
+### Принципы SOLID
 
-Проект спроектирован с опорой на SOLID:
-
-- **S (Single Responsibility)**
-    - `InputReader` — только ввод и валидация
-    - `ResultPrinter` — только вывод
-    - `CreditCalculatorController` — только координация
-    - калькуляторы — только расчёт графика.
+- **S (Single Responsibility)**  
+  `InputReader` — только ввод и валидация;  
+  `ResultPrinter` — только вывод;  
+  `CreditCalculatorController` — только координация;  
+  калькуляторы — только расчёт графика.
 
 - **O (Open–Closed)**  
   Для добавления нового типа графика достаточно:
-    - добавить новый `enum` в `ScheduleType`
-    - реализовать новый класс `SomeCalculator implements ICalculator`
-    - расширить `CalculatorFactory`.  
-      Остальные классы не изменяются.
+  - добавить новый элемент в `ScheduleType`;
+  - реализовать новый класс `SomeCalculator implements ICalculator`;
+  - расширить `CalculatorFactory`.  
+    Остальные классы не изменяются.
 
 - **L (Liskov Substitution)**  
   Везде, где ожидается `ICalculator`, можно передать любую реализацию:  
@@ -120,19 +123,18 @@
 - **D (Dependency Inversion)**  
   `CreditCalculatorController` работает с абстракцией `ICalculator`, а конкретный класс создаёт `CalculatorFactory`.
 
-## Как запустить
+### Как запустить консольную версию
 
 1. Склонировать репозиторий:
 
    ```bash
-   git clone https://github.com/<your-account>/<https://github.com/degtuareva/creditCalculator.git>.git
-   cd <your-repo>
+   git clone https://github.com/degtuareva/creditCalculator.git
+   cd creditCalculator
+## Вариант 2. Веб‑приложение (Spring Boot + React)
+### Поверх существующей бизнес‑логики добавлен REST‑слой на Spring Boot и интерфейс на React.
 
-Веб‑приложение (Spring Boot + React)
-Поверх существующей бизнес‑логики добавлен REST‑слой на Spring Boot и интерфейс на React.
-
-Стек
-Backend:
+## Стек
+### Backend:
 
 Java 21
 
@@ -147,21 +149,21 @@ Fetch API
 Структура проекта (общая идея)
 text
 .
-├── build.gradle # Gradle‑конфигурация backend
+├── build.gradle                 # Gradle‑конфигурация backend
 ├── src/
-│ └── main/java/org/productStar
-│ ├── CreditApplication.java
-│ ├── AnnuityCalculator*.java
-│ ├── DifferentiatedCalculator.java
-│ ├── Payment.java
-│ ├── ScheduleType.java
-│ ├── CalculatorFactory.java
-│ └── api/
-│ ├── CalculationRequest.java
-│ ├── CalculationSummary.java
-│ ├── CalculationResponse.java
-│ └── CreditController.java
-└── frontend/
+│   └── main/java/org/productStar
+│       ├── CreditApplication.java
+│       ├── AnnuityCalculator*.java
+│       ├── DifferentiatedCalculator.java
+│       ├── Payment.java
+│       ├── ScheduleType.java
+│       ├── CalculatorFactory.java
+│       └── api/
+│           ├── CalculationRequest.java
+│           ├── CalculationSummary.java
+│           ├── CalculationResponse.java
+│           └── CreditController.java
+└── frontend/                    # React + Vite
 ├── package.json
 └── src/
 ├── main.jsx
@@ -186,7 +188,6 @@ public class CreditController {
         // расчёт графика и сводки
         // возврат CalculationResponse
     }
-
 }
 DTO:
 
@@ -223,17 +224,17 @@ CORS для фронта разрешён в CreditController через @CrossO
 js
 import "./App.css";
 Запуск веб‑версии
-Запуск backend:
+#### Запуск backend:
 
 bash
 ./gradlew bootRun
 Backend поднимется на http://localhost:8081.
 
-Запуск frontend:
+#### Запуск frontend:
 
 bash
 cd frontend
-npm install # один раз
+npm install      # один раз
 npm run dev
 Vite выведет локальный адрес, например: http://localhost:5174/.
 
