@@ -1,8 +1,8 @@
 plugins {
     id 'java'
-    id "io.freefair.lombok" version "8.4"// Базовый Java-плагин
-    id 'org.springframework.boot' version '3.2.1'      // Плагин Spring Boot
-    id 'io.spring.dependency-management' version '1.1.4' // Управление зависимостями Spring
+    id "io.freefair.lombok" version "8.4"
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'org.productStar'                              // Группа (package base)
@@ -14,22 +14,40 @@ repositories {
 }
 
 dependencies {
-    // ===== Runtime / main =====
-    //implementation "org.springframework.boot:spring-boot-starter"
-   // implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-    //implementation "org.springframework.boot:spring-boot-starter-web"
-    //implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // REST, JSON, встроенный Tomcat
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    // ===== Тесты =====
-    testImplementation 'org.springframework.boot:spring-boot-starter-test' // JUnit5, Mockito и др.
-    // Если хочешь оставить явный BOM JUnit (не обязательно, но можно):
-   // testImplementation platform('org.junit:junit-bom:5.10.0')
-   //  testImplementation 'org.junit.jupiter:junit-jupiter'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
     useJUnitPlatform()                                 // Включаем JUnit 5
+}
+// ====== ЭТО ДОБАВИТЬ НИЖЕ ======
+
+def frontendDir = "${projectDir}/frontend"
+
+tasks.register('npmInstall', Exec) {
+    workingDir frontendDir
+    // Windows-вариант: команда через cmd
+    commandLine 'cmd', '/c', 'npm install'
+}
+
+tasks.register('npmBuild', Exec) {
+    dependsOn 'npmInstall'
+    workingDir frontendDir
+    commandLine 'cmd', '/c', 'npm run build'
+}
+
+tasks.register('copyFrontend', Copy) {
+    dependsOn 'npmBuild'
+    from "${frontendDir}/dist"
+    into "${projectDir}/src/main/resources/static"
+}
+
+tasks.named('processResources') {
+    dependsOn 'copyFrontend'
 }

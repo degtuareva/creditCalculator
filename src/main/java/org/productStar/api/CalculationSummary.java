@@ -12,5 +12,4 @@ public class CalculationSummary {
     private double totalPayment;
     private double totalInterest;
     private double overpayment;
-
 }

@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16
+    container_name: credit-postgres
+    environment:
+      POSTGRES_DB: creditdb
+      POSTGRES_USER: credituser
+      POSTGRES_PASSWORD: creditpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: credit-app
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+    environment:
+      # можно оставить конфиг в application.yml, тогда эти переменные не обязательны
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/creditdb
+      SPRING_DATASOURCE_USERNAME: credituser
+      SPRING_DATASOURCE_PASSWORD: creditpass
+    restart: unless-stopped
+
+volumes:
+  pgdata:

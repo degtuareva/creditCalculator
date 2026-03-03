@@ -3,6 +3,8 @@ package org.productStar.api;
 import org.productStar.CalculatorFactory;
 import org.productStar.ICalculator;
 import org.productStar.ScheduleType;
+import org.productStar.db.CreditCalculationEntity;
+import org.productStar.db.CreditCalculationRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/api/credit")
 @CrossOrigin(origins = "http://localhost:5174") // React dev-сервер
 public class CreditController {
+
+    private final CreditCalculationRepository repository;
+
+    public CreditController(CreditCalculationRepository repository) {
+        this.repository = repository;
+    }
 
     @PostMapping("/calculate")
     public ResponseEntity<CalculationResponse> calculate(@RequestBody CalculationRequest request) {
@@ -54,6 +64,19 @@ public class CreditController {
         CalculationResponse response = new CalculationResponse();
         response.setSummary(summary);
         response.setPayments(calculator.getPaymentsSchedule());
+
+
+        CreditCalculationEntity entity = new CreditCalculationEntity();
+        entity.setOriginalPrincipal(principal);
+        entity.setDownPayment(downPayment);
+        entity.setActualPrincipal(actualPrincipal);
+        entity.setTotalPayment(totalPayment);
+        entity.setTotalInterest(totalInterest);
+        entity.setOverpayment(overpayment);
+        entity.setScheduleType(type.name());
+        entity.setCreatedAt(LocalDateTime.now());
+
+        repository.save(entity);
 
         return ResponseEntity.ok(response);
     }
