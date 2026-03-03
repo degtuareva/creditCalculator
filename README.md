@@ -127,3 +127,116 @@
    ```bash
    git clone https://github.com/<your-account>/<https://github.com/degtuareva/creditCalculator.git>.git
    cd <your-repo>
+
+Веб‑приложение (Spring Boot + React)
+Поверх существующей бизнес‑логики добавлен REST‑слой на Spring Boot и интерфейс на React.
+
+Стек
+Backend:
+
+Java 21
+
+Spring Boot (Web)
+
+Frontend:
+
+React + Vite
+
+Fetch API
+
+Структура проекта (общая идея)
+text
+.
+├── build.gradle # Gradle‑конфигурация backend
+├── src/
+│ └── main/java/org/productStar
+│ ├── CreditApplication.java
+│ ├── AnnuityCalculator*.java
+│ ├── DifferentiatedCalculator.java
+│ ├── Payment.java
+│ ├── ScheduleType.java
+│ ├── CalculatorFactory.java
+│ └── api/
+│ ├── CalculationRequest.java
+│ ├── CalculationSummary.java
+│ ├── CalculationResponse.java
+│ └── CreditController.java
+└── frontend/
+├── package.json
+└── src/
+├── main.jsx
+├── App.jsx
+├── App.css
+└── index.css
+Backend (REST API)
+CreditApplication.java – точка входа Spring Boot.
+
+Основной контроллер:
+
+java
+@RestController
+@RequestMapping("/api/credit")
+@CrossOrigin(origins = "http://localhost:5174") // адрес React dev-сервера
+public class CreditController {
+
+    @PostMapping("/calculate")
+    public ResponseEntity<CalculationResponse> calculate(@RequestBody CalculationRequest request) {
+        // валидация входных данных
+        // выбор калькулятора через CalculatorFactory
+        // расчёт графика и сводки
+        // возврат CalculationResponse
+    }
+
+}
+DTO:
+
+CalculationRequest – вход: principal, downPayment, years, annualInterestRate, scheduleType.
+
+CalculationSummary – сводка.
+
+CalculationResponse – сводка + список Payment.
+
+Порт backend задаётся в application.yml:
+
+text
+server:
+port: 8081
+Frontend (React + Vite)
+В frontend/src/App.jsx реализована форма ввода параметров кредита и таблица с результатами. Запрос к backend:
+
+js
+const response = await fetch("http://localhost:8081/api/credit/calculate", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+principal: Number(principal),
+downPayment: Number(downPayment),
+years: Number(years),
+annualInterestRate: Number(rate),
+scheduleType, // "ANNUITY" или "DIFFERENTIATED"
+}),
+});
+CORS для фронта разрешён в CreditController через @CrossOrigin.
+
+Стили хранятся в App.css и подключаются в App.jsx:
+
+js
+import "./App.css";
+Запуск веб‑версии
+Запуск backend:
+
+bash
+./gradlew bootRun
+Backend поднимется на http://localhost:8081.
+
+Запуск frontend:
+
+bash
+cd frontend
+npm install # один раз
+npm run dev
+Vite выведет локальный адрес, например: http://localhost:5174/.
+
+Открыть в браузере адрес фронтенда (например, http://localhost:5174).
+Заполнить форму → нажать «Рассчитать» → увидеть сводку и график, которые приходят с backend.
+
