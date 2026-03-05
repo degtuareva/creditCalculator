@@ -1,4 +1,6 @@
-package org.productStar;                     // Пакет, в котором находится класс
+package org.productStar.console;                     // Пакет, в котором находится класс
+
+import org.productStar.domain.ScheduleType;
 
 import java.util.Scanner;
 

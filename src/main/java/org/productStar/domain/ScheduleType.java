@@ -1,4 +1,4 @@
-package org.productStar;                     // Пакет, в котором находится enum ScheduleType
+package org.productStar.domain;                     // Пакет, в котором находится enum ScheduleType
 
 public enum ScheduleType {                  // Объявление перечисления типов графиков платежей
     ANNUITY("annuity", "аннуитет"),         // Константа для аннуитетного графика, с англ. и рус. строками

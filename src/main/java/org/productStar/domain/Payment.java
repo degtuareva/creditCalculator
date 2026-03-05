@@ -1,4 +1,4 @@
-package org.productStar;                         // Пакет с моделью Payment
+package org.productStar.domain;                         // Пакет с моделью Payment
 
 public class Payment {                           // Класс, описывающий один платёж по кредиту
 

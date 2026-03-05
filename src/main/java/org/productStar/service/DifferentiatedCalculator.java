@@ -1,4 +1,6 @@
-package org.productStar;                         // Пакет с дифференцированным калькулятором
+package org.productStar.service;                         // Пакет с дифференцированным калькулятором
+
+import org.productStar.domain.Payment;
 
 import java.util.ArrayList;
 import java.util.List;

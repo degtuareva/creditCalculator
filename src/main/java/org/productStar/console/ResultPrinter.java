@@ -1,4 +1,7 @@
-package org.productStar;                         // Пакет с классом ResultPrinter
+package org.productStar.console;                         // Пакет с классом ResultPrinter
+
+import org.productStar.domain.Payment;
+import org.productStar.service.ICalculator;
 
 public class ResultPrinter {                     // Класс, отвечающий за вывод результатов пользователю
 

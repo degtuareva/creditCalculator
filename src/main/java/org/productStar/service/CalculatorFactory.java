@@ -1,4 +1,6 @@
-package org.productStar;                         // Пакет с фабрикой калькуляторов
+package org.productStar.service;                         // Пакет с фабрикой калькуляторов
+
+import org.productStar.domain.ScheduleType;
 
 public final class CalculatorFactory {           // Финальный класс фабрики (нельзя наследовать)
 

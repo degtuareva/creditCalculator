@@ -1,4 +1,4 @@
-package org.productStar;                     // Пакет, содержащий интерфейс
+package org.productStar.service;                     // Пакет, содержащий интерфейс
 
 public interface IDiscount extends ICalculator { // Интерфейс для калькуляторов с первоначальным взносом, расширяет ICalculator
 

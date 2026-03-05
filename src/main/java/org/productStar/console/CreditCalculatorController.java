@@ -1,4 +1,8 @@
-package org.productStar;                     // Пакет, в котором находится контроллер
+package org.productStar.console;                     // Пакет, в котором находится контроллер
+
+import org.productStar.domain.ScheduleType;
+import org.productStar.service.CalculatorFactory;
+import org.productStar.service.ICalculator;
 
 public class CreditCalculatorController {    // Класс контроллера, оркестратор бизнес-логики
 

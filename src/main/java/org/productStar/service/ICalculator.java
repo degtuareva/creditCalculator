@@ -1,4 +1,6 @@
-package org.productStar;                     // Пакет с интерфейсом ICalculator
+package org.productStar.service;                     // Пакет с интерфейсом ICalculator
+
+import org.productStar.domain.Payment;
 
 import java.util.List;
 

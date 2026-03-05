@@ -1,4 +1,6 @@
-package org.productStar;                         // Пакет с аннуитетным калькулятором с первоначальным взносом
+package org.productStar.service;                         // Пакет с аннуитетным калькулятором с первоначальным взносом
+
+import org.productStar.domain.Payment;
 
 import java.util.ArrayList;
 import java.util.List;

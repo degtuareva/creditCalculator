@@ -1,10 +1,10 @@
 package org.productStar.api;
 
-import org.productStar.CalculatorFactory;
-import org.productStar.ICalculator;
-import org.productStar.ScheduleType;
 import org.productStar.db.CreditCalculationEntity;
 import org.productStar.db.CreditCalculationRepository;
+import org.productStar.domain.ScheduleType;
+import org.productStar.service.CalculatorFactory;
+import org.productStar.service.ICalculator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -12,5 +12,4 @@ public class CalculationRequest {
     private int years;
     private double annualInterestRate;
     private String scheduleType; // "ANNUITY" или "DIFFERENTIATED"
-
 }

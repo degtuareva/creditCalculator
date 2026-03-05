@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name="credit_calculation")
+@Table(name = "credit_calculation")
 public class CreditCalculationEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private double originalPrincipal;
