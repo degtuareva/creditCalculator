@@ -22,10 +22,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      DB_HOST: db
-      DB_NAME: creditdb
-      DB_USER: credituser
-      DB_PASSWORD: creditpass
+      SPRING_PROFILES_ACTIVE: docker
     restart: unless-stopped
 
 volumes:

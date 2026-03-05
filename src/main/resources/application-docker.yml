@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/creditdb
+    username: credituser
+    password: creditpass
+    driver-class-name: org.postgresql.Driver
