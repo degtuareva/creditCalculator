@@ -1,0 +1,8 @@
+{
+  "appId": "org.productstar.creditcalc",
+  "appName": "creditcalc",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": true
+  }
+}

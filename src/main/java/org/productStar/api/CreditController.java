@@ -76,8 +76,9 @@ public class CreditController {
         entity.setScheduleType(type.name());
         entity.setCreatedAt(LocalDateTime.now());
 
-        repository.save(entity);
+        //repository.save(entity);
 
         return ResponseEntity.ok(response);
+
     }
 }

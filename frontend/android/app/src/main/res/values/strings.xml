@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Credit Calculator</string>
+    <string name="title_activity_main">Credit Calculator</string>
+    <string name="package_name">org.productstar.creditcalc</string>
+    <string name="custom_url_scheme">org.productstar.creditcalc</string>
+</resources>
