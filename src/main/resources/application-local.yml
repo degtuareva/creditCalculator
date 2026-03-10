@@ -1,4 +1,10 @@
 spring:
+  web:
+    cors:
+      allowed-origins: [ "http://localhost", "capacitor://localhost", "http://10.0.2.2:8081" ]
+      allowed-methods: [ "GET", "POST", "PUT", "DELETE" ]
+      allowed-headers: [ "*" ]
+      allow-credentials: true
   datasource:
     url: jdbc:postgresql://localhost:5432/creditdb
     username: credituser

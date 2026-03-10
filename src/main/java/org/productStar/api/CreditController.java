@@ -6,17 +6,14 @@ import org.productStar.domain.ScheduleType;
 import org.productStar.service.CalculatorFactory;
 import org.productStar.service.ICalculator;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/credit")
-@CrossOrigin(origins = "http://localhost:5174") // React dev-сервер
+//@CrossOrigin(origins = "*") // на время отладки можно разрешить всех
+@CrossOrigin(origins = {"http://localhost:3000", "capacitor://localhost", "*"})
 public class CreditController {
 
     private final CreditCalculationRepository repository;
@@ -65,7 +62,6 @@ public class CreditController {
         response.setSummary(summary);
         response.setPayments(calculator.getPaymentsSchedule());
 
-
         CreditCalculationEntity entity = new CreditCalculationEntity();
         entity.setOriginalPrincipal(principal);
         entity.setDownPayment(downPayment);
@@ -76,9 +72,9 @@ public class CreditController {
         entity.setScheduleType(type.name());
         entity.setCreatedAt(LocalDateTime.now());
 
-        //repository.save(entity);
+        // Временно не сохраняем, чтобы не упираться в права PostgreSQL
+        // repository.save(entity);
 
         return ResponseEntity.ok(response);
-
     }
 }

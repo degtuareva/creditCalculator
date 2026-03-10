@@ -1,7 +1,6 @@
-// frontend/src/App.jsx
 import { useState } from "react";
-import "./App.css"; // сюда подключим стили
-import {API_BASE_URL} from "./config.js";
+import "./App.css";
+import { API_BASE_URL } from "./config.js";
 
 const SCHEDULE_TYPES = {
     ANNUITY: "ANNUITY",
@@ -26,11 +25,16 @@ function App() {
         const r = Number(rate);
 
         const errors = [];
-        if (!Number.isFinite(p) || p <= 0) errors.push("Сумма кредита должна быть > 0.");
-        if (!Number.isFinite(d) || d < 0) errors.push("Первоначальный взнос не может быть отрицательным.");
-        if (d > p) errors.push("Первоначальный взнос не может быть больше суммы кредита.");
-        if (!Number.isInteger(y) || y <= 0) errors.push("Срок кредита (лет) должен быть целым числом > 0.");
-        if (!Number.isFinite(r) || r <= 0) errors.push("Ставка должна быть > 0.");
+        if (!Number.isFinite(p) || p <= 0)
+            errors.push("Сумма кредита должна быть > 0.");
+        if (!Number.isFinite(d) || d < 0)
+            errors.push("Первоначальный взнос не может быть отрицательным.");
+        if (d > p)
+            errors.push("Первоначальный взнос не может быть больше суммы кредита.");
+        if (!Number.isInteger(y) || y <= 0)
+            errors.push("Срок кредита (лет) должен быть целым числом > 0.");
+        if (!Number.isFinite(r) || r <= 0)
+            errors.push("Ставка должна быть > 0.");
 
         if (errors.length > 0) {
             setError(errors.join(" "));
@@ -55,11 +59,15 @@ function App() {
             console.log("API_BASE_URL =", API_BASE_URL);
             console.log("REQUEST BODY =", body);
 
-            const response = await fetch(`${API_BASE_URL}/api/credit/calculate`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-            });
+            const response = await fetch(
+                `${API_BASE_URL}/api/credit/calculate`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                }
+            );
+            console.log("📡 FETCH RESPONSE:", response.status, response.statusText);
 
             if (!response.ok) {
                 const text = await response.text().catch(() => "");
@@ -71,11 +79,13 @@ function App() {
             const data = await response.json();
             setSummary(data.summary);
             setPayments(data.payments);
-        } catch (e) {
-            console.error("FETCH ERROR:", e);
-            setError("Не удалось связаться с сервером.");
+        } catch (error) {
+            console.error("❌ FETCH ERROR:", error);
+            console.error("❌ NETWORK STATE:", {
+                url: `${API_BASE_URL}/api/credit/calculate`,
+                apiBaseUrl: API_BASE_URL
+            });
         }
-
     };
 
     return (
